@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "399820142477",
+    "project_id": "bartr-2e1bb",
+    "storage_bucket": "bartr-2e1bb.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:399820142477:android:e1856247fde0ad3f432fc4",
+        "android_client_info": {
+          "package_name": "com.bartr.deals"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBJoP3TPjVZZkbRwQPmYA4PeT2RJxQw2YY"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
