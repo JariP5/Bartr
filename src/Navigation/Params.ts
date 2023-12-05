@@ -1,4 +1,4 @@
 export type StackParamList = {
   Login: undefined
-  Influencer: undefined
+  Influencer: {user: string | undefined}
 };

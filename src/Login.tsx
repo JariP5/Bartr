@@ -17,6 +17,12 @@ const Login = () => {
         try {
           const response = await auth().signInWithEmailAndPassword(email, password);
           console.log('User signed in:', response.user);
+          console.log("");
+          console.log(response);
+          navigation.push('Influencer', {
+            user: response.user.email?.toString(),
+          })
+
         } catch (error) {
           console.error('Sign-in error:', error);
           setValidCredentials(false);
@@ -37,9 +43,9 @@ const Login = () => {
                     <InputField type="password" onChangeText={value => setPassword(value)}/>
                 </Input>
 
-                {!validCredentials && <Text>Invalid Credentials</Text>}
+                {!validCredentials && <Text color='red'>Invalid Credentials</Text>}
 
-                <Button mt={2} onPress={() => handleLogin()}></Button>
+                <Button mt={2} onPress={() => handleLogin()}>Login</Button>
 
             </VStack>
         </Center>

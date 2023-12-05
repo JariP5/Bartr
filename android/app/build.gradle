@@ -81,7 +81,7 @@ android {
 
     compileSdkVersion rootProject.ext.compileSdkVersion
 
-    namespace "com.bartr"
+    namespace 'com.bartr.deals'
     defaultConfig {
         applicationId 'com.bartr.deals'
         minSdkVersion rootProject.ext.minSdkVersion
