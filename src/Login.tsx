@@ -13,12 +13,13 @@ const Login = () => {
     const [validCredentials, setValidCredentials] = useState<Boolean>(true);
 
     const handleLogin = async () => {
+        console.log('handleLogin')
         try {
           const response = await auth().signInWithEmailAndPassword(email, password);
-        //   console.log('User signed in:', response.user);
+          console.log('User signed in:', response.user);
         } catch (error) {
-        //   console.error('Sign-in error:', error);
-        //   setValidCredentials(false);
+          console.error('Sign-in error:', error);
+          setValidCredentials(false);
         }
     };
 
