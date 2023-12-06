@@ -3,5 +3,6 @@ export type StackParamList = {
   SignUp: undefined
   SignUpSuccess: undefined
   Admin: undefined
+  Business: {userId: string}
   Influencer: {userId: string}
 };

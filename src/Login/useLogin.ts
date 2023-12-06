@@ -22,9 +22,18 @@ const useLogin = () => {
         try {
           const response = await auth().signInWithEmailAndPassword(email, password);
           console.log(response)
-          navigation.push('Influencer', {
-            userId: response.user.uid,
-          })
+          const role = response.user.displayName;
+          if (role === "influencer") {
+            navigation.push('Influencer', {
+              userId: response.user.uid,
+            })
+          } else if (role === "business"){
+            navigation.push('Business', {
+              userId: response.user.uid,
+            })
+          }
+          
+          
         } catch (error) {
           console.error('Sign-in error:', error);
           setValidCredentials(false);

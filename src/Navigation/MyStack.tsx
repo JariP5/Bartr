@@ -1,6 +1,7 @@
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import * as React from 'react';
 import Admin from '../Admin/Admin';
+import Business from '../Business/Business';
 import Influencer from '../Influencer/Influencer';
 import Login from '../Login/Login';
 import SignUp from '../SignUp/SignUp';
@@ -30,6 +31,10 @@ function MyStack() {
       <Stack.Screen 
         name="Admin" 
         component={Admin}
+      />
+      <Stack.Screen 
+        name="Business" 
+        component={Business}
       />
       <Stack.Screen 
         name="Influencer" 

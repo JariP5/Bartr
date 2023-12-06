@@ -6,12 +6,15 @@ import useAdmin from './useAdmin';
 const Admin = () => {
     const {
         unverifiedInfluencers,
-        verifyInfluencer
+        verifyInfluencer,
+        unverifiedBusinesses, 
+        verifyBusiness
     } = useAdmin();
 
     return (
         <Center w={"100%"} mt={200}>
-            <Text>Welcome</Text>
+
+            <Text>Unverified Influencers</Text>
             {unverifiedInfluencers.map((influencer, index) => (
                 <View key={index}>
                     <Text>{`${influencer.data.firstName} ${influencer.data.lastName}`}</Text>
@@ -22,6 +25,19 @@ const Admin = () => {
                     </Button>
                 </View>
             ))}
+
+            <Text mt={50}>Unverified Business</Text>
+            {unverifiedBusinesses.map((business, index) => (
+                <View key={index}>
+                    <Text>{`${business.data.name}`}</Text>
+                    <Button
+                        mt={2} onPress={() => verifyBusiness(business.id)}
+                    > 
+                        <ButtonText>Verify {business.data.name}</ButtonText>
+                    </Button>
+                </View>
+            ))}
+
         </Center>
     );
 };
