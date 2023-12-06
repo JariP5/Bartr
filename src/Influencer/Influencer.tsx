@@ -5,11 +5,12 @@ import useInfluencer from './useInfluencer';
 
 const Influencer = () => {
     const {
-        user
+        userData
     } = useInfluencer();
     return (
         <Center w={"100%"} mt={200}>
-            <Text>Welcome {user}</Text>
+            <Text>Welcome {userData?.firstName}</Text>
+            <Text>Verified: {userData?.verified ? "True" : "False"}</Text>
         </Center>
       );
 };

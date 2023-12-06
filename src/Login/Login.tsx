@@ -1,29 +1,16 @@
 import { Button, ButtonText, Center, Input, InputField, Text, VStack } from '@gluestack-ui/themed';
-import auth from '@react-native-firebase/auth';
-import { useNavigation } from "@react-navigation/native";
-import { StackNavigationProp } from '@react-navigation/stack';
-import React, { useState } from "react";
-import { StackParamList } from './Navigation/Params';
+import React from "react";
+import useLogin from './useLogin';
 
 
 const Login = () => {
-    const navigation = useNavigation<StackNavigationProp<StackParamList>>();
-    const [email, setEmail] = useState<string>("");
-    const [password, setPassword] = useState<string>("");
-    const [validCredentials, setValidCredentials] = useState<Boolean>(true);
-
-    const handleLogin = async () => {
-        try {
-          const response = await auth().signInWithEmailAndPassword(email, password);
-          navigation.push('Influencer', {
-            user: response.user.email?.toString(),
-          })
-
-        } catch (error) {
-          console.error('Sign-in error:', error);
-          setValidCredentials(false);
-        }
-    };
+    const {
+        setEmail, 
+        setPassword,
+        handleLogin, 
+        validCredentials,
+        navigation
+    } = useLogin();
 
     return (
         <Center w={"100%"}>
