@@ -1,7 +1,9 @@
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import * as React from 'react';
-import Influencer from '../Influencer';
+import Influencer from '../Influencer/Influencer';
 import Login from '../Login';
+import SignUp from '../SignUp/SignUp';
+import SignUpSuccess from '../SignUp/Success';
 import { StackParamList } from './Params';
 
 const Stack = createNativeStackNavigator<StackParamList>();
@@ -15,6 +17,14 @@ function MyStack() {
       <Stack.Screen 
         name="Login" 
         component={Login}
+      />
+      <Stack.Screen 
+        name="SignUp" 
+        component={SignUp}
+      />
+      <Stack.Screen 
+        name="SignUpSuccess" 
+        component={SignUpSuccess}
       />
       <Stack.Screen 
         name="Influencer" 

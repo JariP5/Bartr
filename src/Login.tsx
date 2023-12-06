@@ -1,4 +1,4 @@
-import { Button, Center, Input, InputField, Text, VStack } from '@gluestack-ui/themed';
+import { Button, ButtonText, Center, Input, InputField, Text, VStack } from '@gluestack-ui/themed';
 import auth from '@react-native-firebase/auth';
 import { useNavigation } from "@react-navigation/native";
 import { StackNavigationProp } from '@react-navigation/stack';
@@ -13,12 +13,8 @@ const Login = () => {
     const [validCredentials, setValidCredentials] = useState<Boolean>(true);
 
     const handleLogin = async () => {
-        console.log('handleLogin')
         try {
           const response = await auth().signInWithEmailAndPassword(email, password);
-          console.log('User signed in:', response.user);
-          console.log("");
-          console.log(response);
           navigation.push('Influencer', {
             user: response.user.email?.toString(),
           })
@@ -29,23 +25,32 @@ const Login = () => {
         }
     };
 
-
     return (
         <Center w={"100%"}>
     
-            <VStack mt={200}>
+            <VStack mt={200} space={'xs'}>
 
                 <Input w={200}>
-                    <InputField onChangeText={value => setEmail(value)}/>
+                    <InputField placeholder={"Email"} onChangeText={value => setEmail(value)}/>
                 </Input>
 
                 <Input w={200}>
-                    <InputField type="password" onChangeText={value => setPassword(value)}/>
+                    <InputField placeholder={"Password"} type="password" onChangeText={value => setPassword(value)}/>
                 </Input>
 
                 {!validCredentials && <Text color='red'>Invalid Credentials</Text>}
 
-                <Button mt={2} onPress={() => handleLogin()}>Login</Button>
+                <Button 
+                    mt={2} onPress={() => handleLogin()}
+                > 
+                    <ButtonText>Login</ButtonText>
+                </Button>
+
+                <Button 
+                    mt={5} onPress={() => navigation.push('SignUp')}
+                > 
+                    <ButtonText>SignUp</ButtonText>
+                </Button>
 
             </VStack>
         </Center>
