@@ -1,7 +1,7 @@
 import firestore from '@react-native-firebase/firestore';
 import { useEffect, useState } from "react";
-import { BusinessDataType, BusinesssType } from '../Types/Business';
-import { InfluencerDataType, InfluencerType } from '../Types/Influencer';
+import { BusinessDataType, BusinesssType } from '../../Types/Business';
+import { InfluencerDataType, InfluencerType } from '../../Types/Influencer';
 
 const useAdmin = () => {
     const [unverifiedInfluencers, setUnverifiedInfluencers] = useState<InfluencerType[]>([]);

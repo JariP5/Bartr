@@ -1,8 +1,8 @@
 import firestore from '@react-native-firebase/firestore';
 import { RouteProp, useRoute } from '@react-navigation/native';
 import { useEffect, useState } from 'react';
-import { StackParamList } from '../Navigation/Params';
-import { BusinessDataType } from '../Types/Business';
+import { StackParamList } from '../../Navigation/Params';
+import { BusinessDataType } from '../../Types/Business';
 
 
 function useBusiness() {

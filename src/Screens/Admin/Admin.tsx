@@ -1,5 +1,6 @@
 import { Button, ButtonText, Center, Text, View } from '@gluestack-ui/themed';
 import React from "react";
+import Header from '../../Reused Components/Header/Header';
 import useAdmin from './useAdmin';
 
 
@@ -12,7 +13,8 @@ const Admin = () => {
     } = useAdmin();
 
     return (
-        <Center w={"100%"} mt={200}>
+        <Center w={"100%"}>
+            <Header role={'Admin'} name={'Admin'} userId={"admin"}/>
 
             <Text>Unverified Influencers</Text>
             {unverifiedInfluencers.map((influencer, index) => (

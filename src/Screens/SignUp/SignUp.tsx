@@ -2,7 +2,7 @@ import { Button, ButtonText, Center, CircleIcon, CloseIcon, Heading, Icon, Input
 import { useNavigation } from '@react-navigation/native';
 import { StackNavigationProp } from '@react-navigation/stack';
 import React from "react";
-import { StackParamList } from '../Navigation/Params';
+import { StackParamList } from '../../Navigation/Params';
 import useSignUp from './useSignUp';
 
 const SignUp = () => {

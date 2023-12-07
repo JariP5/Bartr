@@ -1,8 +1,8 @@
 import auth from '@react-native-firebase/auth';
 import firestore from '@react-native-firebase/firestore';
 import { useState } from "react";
-import { BusinessDataType } from '../Types/Business';
-import { InfluencerDataType } from '../Types/Influencer';
+import { BusinessDataType } from '../../Types/Business';
+import { InfluencerDataType } from '../../Types/Influencer';
 
 const useSignUp = () => {
     const [firstName, setFirstName] = useState<string>("");
@@ -20,7 +20,7 @@ const useSignUp = () => {
             return;
         }
         if (!isValidEmail(email)) {
-            console.log("Weak email");
+            console.log("Fake email");
             return;
         }
 
