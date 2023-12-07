@@ -1,5 +1,8 @@
-import { Button, ButtonText, Center, CircleIcon, Input, InputField, Radio, RadioGroup, RadioIcon, RadioIndicator, RadioLabel, Text, VStack } from '@gluestack-ui/themed';
+import { Button, ButtonText, Center, CircleIcon, CloseIcon, Heading, Icon, Input, InputField, Modal, ModalBackdrop, ModalBody, ModalCloseButton, ModalContent, ModalHeader, Radio, RadioGroup, RadioIcon, RadioIndicator, RadioLabel, Text, VStack } from '@gluestack-ui/themed';
+import { useNavigation } from '@react-navigation/native';
+import { StackNavigationProp } from '@react-navigation/stack';
 import React from "react";
+import { StackParamList } from '../Navigation/Params';
 import useSignUp from './useSignUp';
 
 const SignUp = () => {
@@ -12,8 +15,13 @@ const SignUp = () => {
         selectedEntity,
         validCredentials,
         handleSignUp,
-        handleRadioChange
+        handleRadioChange,
+        showModal,
+        setShowModal
     } = useSignUp();
+
+    const navigation = useNavigation<StackNavigationProp<StackParamList>>();
+    const ref = React.useRef(null);
 
     return (
         <Center w={"100%"}>
@@ -63,6 +71,30 @@ const SignUp = () => {
                 > 
                     <ButtonText>SignUp</ButtonText>
                 </Button>
+
+                <Modal
+                    isOpen={showModal}
+                    onClose={() => {
+                        setShowModal(false);
+                        navigation.navigate('Login');
+                    }}
+                    finalFocusRef={ref}
+                >
+                    <ModalBackdrop />
+                    <ModalContent>
+                        <ModalHeader>
+                            <Heading size='lg'>Succesfull sign up!</Heading>
+                            <ModalCloseButton>
+                                <Icon as={CloseIcon} />
+                            </ModalCloseButton>
+                        </ModalHeader>
+                        <ModalBody>
+                            <Text >
+                            We will verify your account within the next 48 hours.
+                            </Text>
+                        </ModalBody>
+                    </ModalContent>
+                </Modal>
 
             </VStack>
         </Center>

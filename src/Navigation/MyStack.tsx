@@ -5,7 +5,6 @@ import Business from '../Business/Business';
 import Influencer from '../Influencer/Influencer';
 import Login from '../Login/Login';
 import SignUp from '../SignUp/SignUp';
-import SignUpSuccess from '../SignUp/Success';
 import { StackParamList } from './Params';
 
 const Stack = createNativeStackNavigator<StackParamList>();
@@ -23,10 +22,6 @@ function MyStack() {
       <Stack.Screen 
         name="SignUp" 
         component={SignUp}
-      />
-      <Stack.Screen 
-        name="SignUpSuccess" 
-        component={SignUpSuccess}
       />
       <Stack.Screen 
         name="Admin" 
