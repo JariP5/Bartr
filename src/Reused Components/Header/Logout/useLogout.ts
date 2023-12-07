@@ -6,13 +6,16 @@ import { StackParamList } from '../../../Navigation/Params';
 const useLogout = () => {
     const navigation = useNavigation<StackNavigationProp<StackParamList>>();
 
-    const handleLogout = async (userId: string) => {
+    const handleLogout = async () => {
 
         try {
             // Clear the user token from storage
             await AsyncStorage.removeItem('userToken');
             await AsyncStorage.removeItem('role');
-            navigation.navigate('Login');
+            navigation.reset({
+                index: 0,
+                routes: [{ name: 'Login' }],
+            });
           } catch (error) {
             console.error('Error logging out:', error);
           }

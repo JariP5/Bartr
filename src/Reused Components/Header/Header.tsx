@@ -1,29 +1,24 @@
-import { Box, HStack, Text, View } from '@gluestack-ui/themed';
+import { Box, Divider, HStack, Text, View } from '@gluestack-ui/themed';
 import * as React from 'react';
+import { useUserContext } from '../../Context/User';
 import Logout from './Logout/Logout';
-  
-  
-type Props = {
-    role: string
-    name: string
-    userId: string
-}
 
-function Header({ role, name, userId }: Props) {
+function Header() {
+    const { user } = useUserContext();
     return(
         <View>
-            <View paddingTop={20}>
-                <View h={20} alignItems={'center'} justifyContent={'center'}>
+            <View paddingTop={40}>
                 <HStack mx={2} alignItems={'center'} space={'md'}>
 
-                    <Text>{role}</Text>
-                    <Text>{name}</Text>
-                    <Logout userId={userId}/>
+                    <Text>Empty</Text>
+                    <Divider orientation="vertical"/>
+                    <Text>{user!.data.displayName}</Text>
+                    <Divider orientation="vertical"/>
+                    <Logout/>
                     
                 </HStack>
-                </View>
             </View>
-            <HStack alignItems={'center'}>
+            <HStack alignItems={'center'} mt={2}>
                 <Box h={1} flex={1} bg={'$red500'}/>  
             </HStack>
         </View>

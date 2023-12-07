@@ -1,41 +1,38 @@
 import { Button, ButtonText, Center, Text, View } from '@gluestack-ui/themed';
 import React from "react";
-import Header from '../../Reused Components/Header/Header';
 import useAdmin from './useAdmin';
 
 
 const Admin = () => {
     const {
         unverifiedInfluencers,
-        verifyInfluencer,
         unverifiedBusinesses, 
-        verifyBusiness
+        verifyUser
     } = useAdmin();
 
     return (
         <Center w={"100%"}>
-            <Header role={'Admin'} name={'Admin'} userId={"admin"}/>
 
-            <Text>Unverified Influencers</Text>
+            <Text mt={100}>Unverified Influencers</Text>
             {unverifiedInfluencers.map((influencer, index) => (
                 <View key={index}>
-                    <Text>{`${influencer.data.firstName} ${influencer.data.lastName}`}</Text>
+                    <Text>{`${influencer.data.influencer!.firstName} ${influencer.data.influencer!.lastName}`}</Text>
                     <Button
-                        mt={2} onPress={() => verifyInfluencer(influencer.id)}
+                        mt={2} onPress={() => verifyUser(influencer.id)}
                     > 
-                        <ButtonText>Verify {influencer.data.firstName}</ButtonText>
+                        <ButtonText>Verify {influencer.data.influencer!.firstName}</ButtonText>
                     </Button>
                 </View>
             ))}
 
-            <Text mt={50}>Unverified Business</Text>
+            <Text mt={100}>Unverified Business</Text>
             {unverifiedBusinesses.map((business, index) => (
                 <View key={index}>
-                    <Text>{`${business.data.name}`}</Text>
+                    <Text>{`${business.data.business!.companyName}`}</Text>
                     <Button
-                        mt={2} onPress={() => verifyBusiness(business.id)}
+                        mt={2} onPress={() => verifyUser(business.id)}
                     > 
-                        <ButtonText>Verify {business.data.name}</ButtonText>
+                        <ButtonText>Verify {business.data.business!.companyName}</ButtonText>
                     </Button>
                 </View>
             ))}

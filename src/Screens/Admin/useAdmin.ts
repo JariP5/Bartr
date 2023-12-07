@@ -1,78 +1,46 @@
 import firestore from '@react-native-firebase/firestore';
 import { useEffect, useState } from "react";
-import { BusinessDataType, BusinesssType } from '../../Types/Business';
-import { InfluencerDataType, InfluencerType } from '../../Types/Influencer';
+import { UserDataType, UserType } from '../../Types/User';
 
 const useAdmin = () => {
-    const [unverifiedInfluencers, setUnverifiedInfluencers] = useState<InfluencerType[]>([]);
-    const [unverifiedBusinesses, setUnverifiedBusinesses] = useState<BusinesssType[]>([]);
+    const [unverifiedInfluencers, setUnverifiedInfluencers] = useState<UserType[]>([]);
+    const [unverifiedBusinesses, setUnverifiedBusinesses] = useState<UserType[]>([]);
     
     useEffect(() => {
-        const fetchUnverifiedInfluencers = async () => {
+        const fetchUnverifiedUsers = async () => {
             try {
                 const querySnapshot = await firestore()
-                .collection('influencer') 
+                .collection('users') 
                 .where('verified', '==', false)
                 .get();
 
-                const influencersData: InfluencerType[] = [];
+                const influencers: UserType[] = [];
+                const businesses: UserType[] = [];
 
                 querySnapshot.forEach((documentSnapshot) => {
-                    const influencerData = documentSnapshot.data() as InfluencerDataType;
+                    const user = documentSnapshot.data() as UserDataType;
 
-                    influencersData.push({id: documentSnapshot.id, data: influencerData});
-                    console.log('Influencer document data:', influencerData);
+                    if (user.role === 'Influencer') {
+                        influencers.push({id: documentSnapshot.id, data: user});
+                    } else if (user.role === 'Business') {
+                        businesses.push({id: documentSnapshot.id, data: user});
+                    }
                 });
 
-                setUnverifiedInfluencers(influencersData);
+                setUnverifiedBusinesses(businesses)
+                setUnverifiedInfluencers(influencers);
             } catch (error) {
                 console.error('Error querying user documents:', error);
             }
         };
 
-        const fetchUnverifiedBusinesses = async () => {
-            try {
-                const querySnapshot = await firestore()
-                .collection('business') 
-                .where('verified', '==', false)
-                .get();
-
-                const businessesData: BusinesssType[] = [];
-
-                querySnapshot.forEach((documentSnapshot) => {
-                    const businessData = documentSnapshot.data() as BusinessDataType;
-
-                    businessesData.push({id: documentSnapshot.id, data: businessData});
-                    console.log('Influencer document data:', businessData);
-                });
-
-                setUnverifiedBusinesses(businessesData);
-            } catch (error) {
-                console.error('Error querying user documents:', error);
-            }
-        };
-
-        fetchUnverifiedBusinesses();
-        fetchUnverifiedInfluencers();
+        fetchUnverifiedUsers();
     }, []); 
 
-    const verifyInfluencer = async (userId: string) => {
+    const verifyUser = async (userId: string) => {
         try {
             firestore()
-            .collection('influencer')
-            .doc(userId)
-            .set({
-                verified: true,
-            }, { merge: true });
-        } catch (error) {
-            console.error('Error verifying user:', error);
-        }
-    };
-
-    const verifyBusiness = async (userId: string) => {
-        try {
-            firestore()
-            .collection('business')
+            .collection('user')
             .doc(userId)
             .set({
                 verified: true,
@@ -84,9 +52,8 @@ const useAdmin = () => {
 
     return {
         unverifiedInfluencers,
-        verifyInfluencer,
         unverifiedBusinesses,
-        verifyBusiness
+        verifyUser,
     }
 };
 

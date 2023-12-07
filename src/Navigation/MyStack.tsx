@@ -1,18 +1,20 @@
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import * as React from 'react';
-import Admin from '../Screens/Admin/Admin';
-import Business from '../Screens/Business/Business';
-import Influencer from '../Screens/Influencer/Influencer';
+import Home from '../Screens/Home/Home';
 import Login from '../Screens/Login/Login';
-import SignUp from '../Screens/SignUp/SignUp';
+import SignUp from '../Screens/SignUp/Influencer/SignUp';
 import { StackParamList } from './Params';
+
+type Props = {
+  initialRouteName: "Login" | "SignUpInfluencer" | "SignUpBusiness" | "Home"
+}
 
 const Stack = createNativeStackNavigator<StackParamList>();
 
-function MyStack() {
+function MyStack({ initialRouteName }: Props) {
   return(
     <Stack.Navigator 
-      initialRouteName="Login" 
+      initialRouteName={initialRouteName}
       screenOptions={{headerShown: false}}
     >
       <Stack.Screen 
@@ -20,22 +22,16 @@ function MyStack() {
         component={Login}
       />
       <Stack.Screen 
-        name="SignUp" 
+        name="SignUpInfluencer" 
         component={SignUp}
       />
       <Stack.Screen 
-        name="Admin" 
-        component={Admin}
-        options={{ gestureEnabled: false }}
+        name="SignUpBusiness" 
+        component={SignUp}
       />
       <Stack.Screen 
-        name="Business" 
-        component={Business}
-        options={{ gestureEnabled: false }}
-      />
-      <Stack.Screen 
-        name="Influencer" 
-        component={Influencer}
+        name="Home" 
+        component={Home}
         options={{ gestureEnabled: false }}
       />
     </Stack.Navigator>  

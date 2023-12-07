@@ -1,17 +1,18 @@
 import auth from '@react-native-firebase/auth';
 import firestore from '@react-native-firebase/firestore';
 import { useState } from "react";
-import { BusinessDataType } from '../../Types/Business';
-import { InfluencerDataType } from '../../Types/Influencer';
+import { InfluencerType } from '../../../Types/Influencer';
+import { UserDataType } from '../../../Types/User';
 
-const useSignUp = () => {
+const useSignUpInfluencer = () => {
     const [firstName, setFirstName] = useState<string>("");
     const [lastName, setLastName] = useState<string>("");
     const [email, setEmail] = useState<string>("");
+    const [instagram, setInstagram] = useState<string>("");
+    const [birthday, setBirthday] = useState<string>("");
     const [password, setPassword] = useState<string>("");
     const [confirmedPassword, setConfirmedPassword] = useState<string>("");
     const [validCredentials, setValidCredentials] = useState<Boolean>(true);
-    const [selectedEntity, setSelectedEntity] = useState('influencer');
     const [showModal, setShowModal] = useState<boolean>(false);
 
     const handleSignUp = async () => {
@@ -28,14 +29,14 @@ const useSignUp = () => {
             const response = await auth().createUserWithEmailAndPassword(email, password);
             // Set display name
             await response.user.updateProfile({
-                displayName: selectedEntity,
+                displayName: firstName,
             });
             
-            const userInfo = getUserInfo();
+            const influencerInfo = getInfluencerInfo();
             firestore()
-            .collection(selectedEntity)
+            .collection('user')
             .doc(response.user.uid)
-            .set(userInfo)
+            .set(influencerInfo)
 
             setShowModal(true);
         } catch (error) {
@@ -43,34 +44,25 @@ const useSignUp = () => {
         }
     };
 
-    function getUserInfo() {
-        if (selectedEntity === "influencer") {
-            const influencerInfo: InfluencerDataType = {
-                firstName: firstName,
-                lastName: lastName,
-                birthday: "21.03.2000",
-                instagram: "jpolm",
-                followers: 300,
-                verified: false,
-                email: email
-            }
-            return influencerInfo;
-        } else {
-            const businessInfo: BusinessDataType = {
-                name: firstName,
-                birthday: "21.03.2000",
-                instagram: "jpolm",
-                followers: 300,
-                verified: false,
-                email: email
-            }
-            return businessInfo;
+    function getInfluencerInfo() {
+        const influencerData: InfluencerType = {
+            firstName: firstName,
+            lastName: lastName,
+            birthday: "21.03.2000",
         }
+
+        const userData: UserDataType = {
+            verified: false,
+            role: 'Influencer',
+            email: email,
+            displayName: firstName,
+            instagram: instagram,
+            influencer: influencerData
+        }
+
+        return userData;
     }
 
-    const handleRadioChange = (value: string) => {
-        setSelectedEntity(value);
-    };
 
     function isValidEmail(email: string) {
         // Regular expression for basic email validation
@@ -81,16 +73,15 @@ const useSignUp = () => {
     return {
         setFirstName, 
         setLastName, 
+        setBirthday,
+        setInstagram,
         setEmail, 
         setPassword,
         setConfirmedPassword, 
         validCredentials,
-        selectedEntity,
         handleSignUp,
-        handleRadioChange,
-        showModal, 
-        setShowModal
+        showModal
     }
 };
 
-export default useSignUp;
+export default useSignUpInfluencer;

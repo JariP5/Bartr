@@ -34,9 +34,15 @@ const Login = () => {
                 </Button>
 
                 <Button 
-                    mt={5} onPress={() => navigation.push('SignUp')}
+                    mt={5} onPress={() => navigation.push('SignUpInfluencer')}
                 > 
-                    <ButtonText>SignUp</ButtonText>
+                    <ButtonText>SignUp as Influencer</ButtonText>
+                </Button>
+
+                <Button 
+                    mt={2} onPress={() => navigation.push('SignUpBusiness')}
+                > 
+                    <ButtonText>SignUp as Business</ButtonText>
                 </Button>
 
             </VStack>
