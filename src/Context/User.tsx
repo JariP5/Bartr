@@ -5,15 +5,15 @@ import { UserDataType, UserType } from '../Types/User';
 
 export type UserContextType = {
     user: UserType | undefined;
-    reset: () => void;
-    update: (userId: string) => void;
+    logoutUser: () => void;
+    updateUser: (userId: string) => void;
     fetchUser: (userId: string) => void;
 }
 
 export const UserContext = createContext<UserContextType>({
     user: undefined,
-    reset: () => {},
-    update: () => {},
+    logoutUser: () => {},
+    updateUser: () => {},
     fetchUser: () => {}
 });
 
@@ -49,18 +49,19 @@ export const UserProvider: React.FC<{ children: React.ReactNode }> = ({ children
     } catch (error) {
         console.error('Error querying user documents:', error);
     }
-};
-
-  const reset = async () => {
-    
-  };
-  const update = async () => {
-    
   };
 
+  const logoutUser = async () => {
+    await AsyncStorage.removeItem('userToken');
+    setUser(undefined);
+  };
+
+  const updateUser = async () => {
+    
+  };
 
   return (
-    <UserContext.Provider value={{ user, reset, update, fetchUser }}>
+    <UserContext.Provider value={{ user, logoutUser, updateUser, fetchUser }}>
       {children}
     </UserContext.Provider>
   );

@@ -40,7 +40,7 @@ const useSignUpInfluencer = () => {
 
             setShowModal(true);
         } catch (error) {
-            console.error('Sign-up error:', error);
+            console.error('SignUp error:', error);
         }
     };
 
@@ -48,7 +48,7 @@ const useSignUpInfluencer = () => {
         const influencerData: InfluencerType = {
             firstName: firstName,
             lastName: lastName,
-            birthday: "21.03.2000",
+            birthday: birthday,
         }
 
         const userData: UserDataType = {

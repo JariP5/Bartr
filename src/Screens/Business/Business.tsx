@@ -1,14 +1,14 @@
-import { View } from '@gluestack-ui/themed';
+import { Text } from '@gluestack-ui/themed';
 import React from "react";
 import useBusiness from './useBusiness';
 
 
 const Business = () => {
     const {
-        
+        user
     } = useBusiness();
     return (
-        <View></View>
+        <Text>{user?.data.email}</Text>
     );
 };
 

@@ -5,11 +5,11 @@ import MyStack from '../../Navigation/MyStack';
 function RenderBasedOnLoginStatus(): JSX.Element {
   const { user } = useUserContext();
 
-  if (user) {
-    return <MyStack initialRouteName={'Home'}/>;
+  if (user == null) {
+    return <MyStack initialRouteName={'Login'}/>;
   }
 
-  return <MyStack initialRouteName={'Login'}/>;
+  return <MyStack initialRouteName={'Home'}/>;
 }
 
 export default RenderBasedOnLoginStatus;

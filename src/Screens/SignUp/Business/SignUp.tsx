@@ -1,9 +1,9 @@
 import { Button, ButtonText, Center, Input, InputField, Text, VStack } from '@gluestack-ui/themed';
 import React from "react";
 import SignUpModal from '../Modal';
-import useSignUp from './useSignUp';
+import useSignUpBusiness from './useSignUp';
 
-const SignUp = () => {
+const SignUpBusiness = () => {
     const {
         setCompanyName, 
         setLocation,
@@ -13,7 +13,7 @@ const SignUp = () => {
         validCredentials,
         handleSignUp,
         showModal
-    } = useSignUp();
+    } = useSignUpBusiness();
 
     return (
         <Center w={"100%"}>
@@ -55,4 +55,4 @@ const SignUp = () => {
       );
 };
 
-export default SignUp;
+export default SignUpBusiness;

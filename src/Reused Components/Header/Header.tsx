@@ -12,14 +12,14 @@ function Header() {
 
                     <Text>Empty</Text>
                     <Divider orientation="vertical"/>
-                    <Text>{user!.data.displayName}</Text>
+                    <Text>{user?.data.displayName}</Text>
                     <Divider orientation="vertical"/>
                     <Logout/>
                     
                 </HStack>
             </View>
             <HStack alignItems={'center'} mt={2}>
-                <Box h={1} flex={1} bg={'$red500'}/>  
+                <Box h={1} flex={1} bg={'$red400'}/>  
             </HStack>
         </View>
     );

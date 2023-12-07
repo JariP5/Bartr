@@ -2,7 +2,8 @@ import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import * as React from 'react';
 import Home from '../Screens/Home/Home';
 import Login from '../Screens/Login/Login';
-import SignUp from '../Screens/SignUp/Influencer/SignUp';
+import SignUpBusiness from '../Screens/SignUp/Business/SignUp';
+import SignUpInfluencer from '../Screens/SignUp/Influencer/SignUp';
 import { StackParamList } from './Params';
 
 type Props = {
@@ -23,11 +24,13 @@ function MyStack({ initialRouteName }: Props) {
       />
       <Stack.Screen 
         name="SignUpInfluencer" 
-        component={SignUp}
+        component={SignUpInfluencer}
+        // options={{ presentation: 'modal'}}
       />
       <Stack.Screen 
         name="SignUpBusiness" 
-        component={SignUp}
+        component={SignUpBusiness}
+        // options={{ presentation: 'modal'}}
       />
       <Stack.Screen 
         name="Home" 

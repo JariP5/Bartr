@@ -10,7 +10,7 @@ const useAdmin = () => {
         const fetchUnverifiedUsers = async () => {
             try {
                 const querySnapshot = await firestore()
-                .collection('users') 
+                .collection('user') 
                 .where('verified', '==', false)
                 .get();
 

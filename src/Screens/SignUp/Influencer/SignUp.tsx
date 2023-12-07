@@ -7,6 +7,8 @@ const SignUpInfluencer = () => {
     const {
         setFirstName, 
         setLastName,
+        setBirthday,
+        setInstagram,
         setEmail, 
         setPassword,
         setConfirmedPassword, 
@@ -29,11 +31,11 @@ const SignUpInfluencer = () => {
                 </Input>
 
                 <Input w={200}>
-                    <InputField placeholder={"Instagram"} onChangeText={value => setLastName(value)}/>
+                    <InputField placeholder={"Instagram"} onChangeText={value => setInstagram(value)}/>
                 </Input>
 
                 <Input w={200}>
-                    <InputField placeholder={"Birthday"} onChangeText={value => setLastName(value)}/>
+                    <InputField placeholder={"Birthday"} onChangeText={value => setBirthday(value)}/>
                 </Input>
 
                 <Input w={200}>
