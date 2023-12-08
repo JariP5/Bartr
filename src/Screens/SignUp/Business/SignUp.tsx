@@ -1,5 +1,6 @@
 import { Button, ButtonText, Center, Input, InputField, Text, VStack } from '@gluestack-ui/themed';
 import React from "react";
+import SignUpHeader from '../Header';
 import SignUpModal from '../Modal';
 import useSignUpBusiness from './useSignUp';
 
@@ -15,30 +16,32 @@ const SignUpBusiness = () => {
         showModal
     } = useSignUpBusiness();
 
-    return (
-        <Center w={"100%"}>
-    
-            <VStack mt={200} space={'xs'}>
 
-                <Input w={200}>
+    return (
+        <Center w={"100%"} >
+        
+            <SignUpHeader role={"Business"} />
+    
+            <VStack w={'100%'} mt={100} space={'md'} px={50}>
+                <Input >
                     <InputField placeholder={"Company Name"} onChangeText={value => setCompanyName(value)}/>
                 </Input>
 
-                <Input w={200}>
+                <Input>
                     <InputField placeholder={"Location"} onChangeText={value => setLocation(value)}/>
                 </Input>
 
-                <Input w={200}>
+                <Input>
                     <InputField placeholder={"Email"} onChangeText={value => setEmail(value)}/>
                 </Input>
 
-                <Input w={200}>
+                <Input>
                     <InputField placeholder={"Password"} type="password" onChangeText={value => setPassword(value)}/>
                 </Input>
-                <Input w={200}>
+                <Input>
                     <InputField placeholder={"Confirm Password"} type="password" onChangeText={value => setConfirmedPassword(value)}/>
                 </Input>
- 
+
 
                 {!validCredentials && <Text color='red'>Passwords do not match</Text>}
 

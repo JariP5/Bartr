@@ -52,7 +52,7 @@ const useSignUpInfluencer = () => {
         }
 
         const userData: UserDataType = {
-            verified: false,
+            status: "waiting",
             role: 'Influencer',
             email: email,
             displayName: firstName,

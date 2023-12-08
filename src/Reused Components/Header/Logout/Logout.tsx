@@ -1,4 +1,4 @@
-import { Button, ButtonText } from '@gluestack-ui/themed';
+import { ExternalLinkIcon, Pressable, View } from '@gluestack-ui/themed';
 import * as React from 'react';
 import useLogout from './useLogout';
 
@@ -8,11 +8,14 @@ function Logout() {
     } = useLogout();
 
     return(
-        <Button 
-            mt={5} onPress={() => handleLogout()}
-        > 
-            <ButtonText>Logout</ButtonText>
-        </Button>
+        <View w={20}>
+            <Pressable
+                $pressed={{opacity: 0.5}}
+                onPress={() => handleLogout()}
+            > 
+                <ExternalLinkIcon size={'xl'} />
+            </Pressable>
+        </View>
     );
 }
 

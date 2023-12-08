@@ -50,7 +50,7 @@ const useSignUpBusiness = () => {
         }
 
         const userData: UserDataType = {
-            verified: false,
+            status: "waiting",
             role: 'Business',
             email: email,
             displayName: companyName,

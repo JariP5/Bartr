@@ -2,7 +2,7 @@ import { Center } from "@gluestack-ui/themed";
 import { useUserContext } from "../../Context/User";
 import Header from "../../Reused Components/Header/Header";
 import Loading from "../../Reused Components/Loading";
-import RenderBasedOnUser from "../BasedOn/RenderBasedOnUser";
+import RenderBasedOnUser from "../BasedOn/User";
 
 const Home = () => {
     const { user } = useUserContext();
@@ -12,7 +12,7 @@ const Home = () => {
     }
     
     return (
-        <Center w={"100%"} mt={200}>
+        <Center w={"100%"} bgColor="white">
             <Header/>
             <RenderBasedOnUser/>
         </Center>

@@ -1,26 +1,21 @@
-import { Box, Divider, HStack, Text, View } from '@gluestack-ui/themed';
+import { Box, HStack, Heading, View } from '@gluestack-ui/themed';
 import * as React from 'react';
+import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import { useUserContext } from '../../Context/User';
 import Logout from './Logout/Logout';
 
 function Header() {
     const { user } = useUserContext();
-    return(
-        <View>
-            <View paddingTop={40}>
-                <HStack mx={2} alignItems={'center'} space={'md'}>
+    const safeArea = useSafeAreaInsets();
 
-                    <Text>Empty</Text>
-                    <Divider orientation="vertical"/>
-                    <Text>{user?.data.displayName}</Text>
-                    <Divider orientation="vertical"/>
-                    <Logout/>
-                    
-                </HStack>
-            </View>
-            <HStack alignItems={'center'} mt={2}>
-                <Box h={1} flex={1} bg={'$red400'}/>  
+    return(
+        <View w={'100%'}>
+            <HStack w={'100%'} alignItems={'center'} justifyContent={'space-between'} paddingTop={safeArea.top + 80} paddingBottom={10} px={20}>
+                <View w={20} />
+                <Heading>{user?.data.role}</Heading>
+                <Logout />
             </HStack>
+            <Box h={2} bgColor={'$blue500'} w={'100%'}></Box>
         </View>
     );
 }

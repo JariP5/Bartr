@@ -2,7 +2,7 @@ import { BusinessType } from "./Business"
 import { InfluencerType } from "./Influencer"
 
 export type UserDataType = {
-    verified: boolean
+    status: "accepted" | "waiting" | "declined"
     role: "Admin" | "Influencer" | "Business"
     email: string
     displayName: string
