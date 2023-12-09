@@ -1,27 +1,35 @@
 import firestore from '@react-native-firebase/firestore';
+import { useRoute } from '@react-navigation/native';
 import { useCallback, useEffect, useState } from "react";
 import { UserDataType, UserType } from '../../../Types/User';
 
-const useDeclined = () => {
-    const [declinedInfluencers, setDeclinedInfluencers] = useState<UserType[]>([]);
-    const [declinedBusinesses, setDeclinedBusinesses] = useState<UserType[]>([]);
+
+const useStatus = () => {
+    const route = useRoute();  
+    const status = route.name.toLowerCase();
+    const [influencers, setInfluencers] = useState<UserType[]>([]);
+    const [businesses, setBusinesses] = useState<UserType[]>([]);
     const [activeValue, setActiveValue] = useState<number>(0);
     const [refreshing, setRefreshing] = useState(false);
 
     const onRefresh = useCallback(() => {
-      // Refresh logic goes here
-      fetchDeclinedUsers();
+        setRefreshing(true);
+        fetchUsers();
+        
+        setTimeout(() => {
+            setRefreshing(false);
+        }, 2000);
     }, []);
   
     useEffect(() => {
-        fetchDeclinedUsers();
+        fetchUsers();
     }, []); 
 
-    const fetchDeclinedUsers = async () => {
+    const fetchUsers = async () => {
         try {
             const querySnapshot = await firestore()
             .collection('user') 
-            .where('status', '==', 'declined')
+            .where('status', '==', status)
             .get();
 
             const influencers: UserType[] = [];
@@ -37,8 +45,8 @@ const useDeclined = () => {
                 }
             });
 
-            setDeclinedBusinesses(businesses)
-            setDeclinedInfluencers(influencers);
+            setBusinesses(businesses)
+            setInfluencers(influencers);
         } catch (error) {
             console.error('Error querying user documents:', error);
         }
@@ -53,7 +61,22 @@ const useDeclined = () => {
                 status: "accepted",
             }, { merge: true });
 
-            removeUserFromDeclinedList(user);
+            removeUserFromList(user);
+        } catch (error) {
+            console.error('Error verifying user:', error);
+        }
+    };
+
+    const declineUser = async (user: UserType) => {
+        try {
+            firestore()
+            .collection('user')
+            .doc(user.id)
+            .set({
+                status: "declined",
+            }, { merge: true });
+
+            removeUserFromList(user);
         } catch (error) {
             console.error('Error verifying user:', error);
         }
@@ -68,20 +91,20 @@ const useDeclined = () => {
                 status: "waiting",
             }, { merge: true });
 
-            removeUserFromDeclinedList(user);
+            removeUserFromList(user);
         } catch (error) {
             console.error('Error verifying user:', error);
         }
     };
 
-    const removeUserFromDeclinedList = (userToRemove: UserType) => {
+    const removeUserFromList = (userToRemove: UserType) => {
         // Filter out the user to be removed
         if (userToRemove.data.role === "Influencer") {
-            const updateddeclinedList = declinedInfluencers.filter(user => user.id !== userToRemove.id);
-            setDeclinedInfluencers(updateddeclinedList);
+            const updatedList = influencers.filter(user => user.id !== userToRemove.id);
+            setInfluencers(updatedList);
         } else if (userToRemove.data.role === "Business") {
-            const updateddeclinedList = declinedBusinesses.filter(user => user.id !== userToRemove.id);
-            setDeclinedBusinesses(updateddeclinedList);
+            const updatedList = businesses.filter(user => user.id !== userToRemove.id);
+            setBusinesses(updatedList);
         }
         
     };
@@ -94,15 +117,17 @@ const useDeclined = () => {
     }
 
     return {
-        declinedInfluencers,
-        declinedBusinesses,
+        influencers,
+        businesses,
         activeValue,
         toggleUser,
         acceptUser,
+        declineUser,
         waitUser,
         onRefresh, 
-        refreshing
+        refreshing,
+        status
     }
 };
 
-export default useDeclined;
+export default useStatus;
