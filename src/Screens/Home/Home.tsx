@@ -1,4 +1,4 @@
-import { Center } from "@gluestack-ui/themed";
+import { View } from "@gluestack-ui/themed";
 import { useUserContext } from "../../Context/User";
 import Header from "../../Reused Components/Header/Header";
 import Loading from "../../Reused Components/Loading";
@@ -12,10 +12,10 @@ const Home = () => {
     }
     
     return (
-        <Center w={"100%"} bgColor="white">
+        <View w={"100%"} bgColor="white">
             <Header/>
             <RenderBasedOnUser/>
-        </Center>
+        </View>
     );
 };
 

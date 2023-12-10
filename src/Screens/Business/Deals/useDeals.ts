@@ -11,7 +11,7 @@ const useDeals = () => {
     const [refreshing, setRefreshing] = useState(false);
     const options: { label: string; value: number }[]  = [
         {label: "Live", value: 0},
-        {label: "Requests", value: 1},
+        {label: "Requested", value: 1},
         {label: "Completed", value: 2},
         {label: "Declined", value: 3}
     ]
@@ -56,10 +56,10 @@ const useDeals = () => {
             .collection('deal')
             .doc(deal.id)
             .set({
-                status: "accepted",
+                status: "live",
             }, { merge: true });
 
-            updateDealStatus(deal.id, "accepted");
+            updateDealStatus(deal.id, "live");
         } catch (error) {
             console.error('Error verifying user:', error);
         }

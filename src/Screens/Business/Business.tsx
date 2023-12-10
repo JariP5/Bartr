@@ -6,7 +6,7 @@ import BusinessTopTab from "../../Navigation/TopTab/Business";
 const Business = () => {
     
     return (
-        <View>
+        <View w={'100%'} h={'100%'}>
             <BusinessTopTab />
         </View>
     );

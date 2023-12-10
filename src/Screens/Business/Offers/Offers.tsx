@@ -20,8 +20,6 @@ function Offers() {
 
     return(
         <ScrollView 
-            flex={1}
-            w={'100%'} 
             bg={'white'} 
             showsVerticalScrollIndicator={false} 
             pt={10} 

@@ -42,12 +42,12 @@ function Deals() {
                             {deal.data.status === "requested" &&
                                 <View>
                                     <Button
-                                    mt={2} onPress={() => acceptDeal(deal)}
+                                        bgColor={'$green500'} $active-bgColor={'$green700'}  onPress={() => acceptDeal(deal)}
                                     >
                                         <ButtonText>Accept</ButtonText>
                                     </Button>
                                     <Button
-                                        mt={2} onPress={() => declineDeal(deal)}
+                                        bgColor={'$red500'} $active-bgColor={'$red700'} mt={2} onPress={() => declineDeal(deal)}
                                     >
                                         <ButtonText>Decline</ButtonText>
                                     </Button>

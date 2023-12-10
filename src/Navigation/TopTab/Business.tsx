@@ -20,10 +20,6 @@ function BusinessTopTab() {
         name="Deals" 
         component={Deals} 
       />
-      <TopTab.Screen 
-        name="Filler" 
-        component={Deals} 
-      />
     </TopTab.Navigator>
   );
 }

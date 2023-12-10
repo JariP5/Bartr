@@ -10,7 +10,7 @@ function Header() {
 
     return(
         <View w={'100%'}>
-            <HStack w={'100%'} alignItems={'center'} justifyContent={'space-between'} paddingTop={safeArea.top + 80} paddingBottom={10} px={20}>
+            <HStack w={'100%'} alignItems={'center'} justifyContent={'space-between'} paddingTop={safeArea.top} paddingBottom={10} px={20}>
                 <View w={20} />
                 <Heading>{user?.data.role}</Heading>
                 <Logout />

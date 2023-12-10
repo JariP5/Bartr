@@ -10,4 +10,4 @@ export type DealType = {
     data: DealDataType
 }
 
-export type DealStatusType = "accepted" | "requested" | "completed" | "declined";
+export type DealStatusType = "live" | "requested" | "completed" | "declined";
