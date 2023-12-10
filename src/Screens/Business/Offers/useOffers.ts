@@ -4,7 +4,7 @@ import { useUserContext } from '../../../Context/User';
 import { OfferDataType, OfferStatusType, OfferType } from '../../../Types/Offer';
 
 
-const useOffers = () => {
+const useBusinessOffers = () => {
     const { user } = useUserContext();
     const [offers, setOffers] = useState<OfferType[]>([]);
     const [activeValue, setActiveValue] = useState<number>(0);
@@ -129,4 +129,4 @@ const useOffers = () => {
     }
 };
 
-export default useOffers;
+export default useBusinessOffers;

@@ -1,7 +1,7 @@
 import { createMaterialTopTabNavigator } from '@react-navigation/material-top-tabs';
 import * as React from 'react';
-import Deals from '../../Screens/Business/Deals/Deals';
-import Offers from '../../Screens/Business/Offers/Offers';
+import BusinessDeals from '../../Screens/Business/Deals/Deals';
+import BusinessOffers from '../../Screens/Business/Offers/Offers';
 import { BusinessTopTabParamList } from '../Params';
 import topTabNavigatorOptions from './styleOptions';
 
@@ -13,12 +13,12 @@ function BusinessTopTab() {
     <TopTab.Navigator screenOptions={topTabNavigatorOptions()}>
       <TopTab.Screen 
         name="Offers"
-        component={Offers}
+        component={BusinessOffers}
 
       />
       <TopTab.Screen 
         name="Deals" 
-        component={Deals} 
+        component={BusinessDeals} 
       />
     </TopTab.Navigator>
   );

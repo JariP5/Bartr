@@ -2,10 +2,10 @@ import { Button, ButtonText, HStack, ScrollView, Text, VStack, View } from '@glu
 import * as React from 'react';
 import { RefreshControl } from 'react-native';
 import Switch from '../../../Reused Components/Switch';
-import useOffers from './useDeals';
+import useBusinessDeals from './useDeals';
   
 
-function Deals() {
+function BusinessDeals() {
     const {
         shownDeals,
         options,
@@ -14,13 +14,11 @@ function Deals() {
         declineDeal,
         refreshing,
         onRefresh
-    } = useOffers();
+    } = useBusinessDeals();
 
     return(
         <ScrollView 
-            flex={1}
-            w={'100%'} 
-            bg={'white'} 
+            bg={'green'} 
             showsVerticalScrollIndicator={false} 
             pt={10} 
             refreshControl={
@@ -35,9 +33,9 @@ function Deals() {
                     <Switch toggleSwitch={toggleSwitch} options={options} />
                 </View>
 
-                {shownDeals.map((deal, index) => (
-                    <HStack key={index} mx={10} bgColor='$yellow100' p={10} justifyContent='space-between' alignItems='center'>
-                        <Text>Deal Title</Text>
+                {shownDeals.map((deal) => (
+                    <HStack key={deal.id} mx={10} bgColor='$yellow100' p={10} justifyContent='space-between' alignItems='center'>
+                        <Text>{deal.data.title}</Text>
                         <VStack>
                             {deal.data.status === "requested" &&
                                 <View>
@@ -62,5 +60,5 @@ function Deals() {
     );
 }
   
-export default Deals;
+export default BusinessDeals;
 

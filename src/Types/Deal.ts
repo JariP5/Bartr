@@ -3,6 +3,7 @@ export type DealDataType = {
     offerId: string
     businessId: string
     influencerId: string
+    title: string
 }
 
 export type DealType = {

@@ -12,7 +12,7 @@ const Home = () => {
     }
     
     return (
-        <View w={"100%"} bgColor="white">
+        <View flex={1} bgColor="red">
             <Header/>
             <RenderBasedOnUser/>
         </View>

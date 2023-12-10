@@ -1,11 +1,15 @@
-import { Text } from '@gluestack-ui/themed';
+import { View } from "@gluestack-ui/themed";
 import React from "react";
+import InfluencerTopTab from "../../Navigation/TopTab/Influencer";
 
 
 const Influencer = () => {
+    
     return (
-        <Text>Welcome Influencer</Text>
-      );
+        <View flex={1}>
+            <InfluencerTopTab />
+        </View>
+    );
 };
 
 export default Influencer;
