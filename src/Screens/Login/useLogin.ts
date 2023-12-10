@@ -15,8 +15,6 @@ const useLogin = () => {
 
 
     const handleLogin = async () => {
-
-
         try {
           const response = await auth().signInWithEmailAndPassword(email, password);
           await AsyncStorage.setItem('userToken', response.user.uid);

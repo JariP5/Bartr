@@ -1,17 +1,21 @@
 import firestore from '@react-native-firebase/firestore';
 import { useCallback, useEffect, useState } from "react";
 import { useUserContext } from '../../../Context/User';
-import { DealDataType, DealType } from '../../../Types/Deal';
+import { DealDataType, DealStatusType, DealType } from '../../../Types/Deal';
 
 
 const useDeals = () => {
     const { user } = useUserContext();
-    const [acceptedDeals, setAcceptedDeals] = useState<DealType[]>([]);
-    const [completedDeals, setCompletedDeals] = useState<DealType[]>([]);
-    const [requestedDeals, setRequestedDeals] = useState<DealType[]>([]);
-    const [declinedDeals, setDeclinedDeals] = useState<DealType[]>([]);
+    const [deals, setDeals] = useState<DealType[]>([]);
     const [activeValue, setActiveValue] = useState<number>(0);
     const [refreshing, setRefreshing] = useState(false);
+    const options: { label: string; value: number }[]  = [
+        {label: "Live", value: 0},
+        {label: "Requests", value: 1},
+        {label: "Completed", value: 2},
+        {label: "Declined", value: 3}
+    ]
+    const shownDeals = deals.filter(deal => deal.data.status === options[activeValue].label.toLowerCase());
 
     const onRefresh = useCallback(() => {
         setRefreshing(true);
@@ -19,7 +23,7 @@ const useDeals = () => {
         
         setTimeout(() => {
             setRefreshing(false);
-        }, 2000);
+        }, 1000);
     }, []);
   
     useEffect(() => {
@@ -33,29 +37,14 @@ const useDeals = () => {
             .where('businessId', '==', user!.id)
             .get();
 
-            const accepted: DealType[] = [];
-            const requested: DealType[] = [];
-            const completed: DealType[] = [];
-            const declined: DealType[] = [];
+            const fetchedDeals: DealType[] = [];
 
             querySnapshot.forEach((documentSnapshot) => {
-                const deal = documentSnapshot.data() as DealDataType;
-
-                if (deal.status === 'accepted') {
-                    accepted.push({id: documentSnapshot.id, data: deal});
-                } else if (deal.status === 'requested') {
-                    requested.push({id: documentSnapshot.id, data: deal});
-                } else if (deal.status === 'completed') {
-                    completed.push({id: documentSnapshot.id, data: deal});
-                } else if (deal.status === 'declined') {
-                    declined.push({id: documentSnapshot.id, data: deal});
-                }
+                const fetchedDeal = documentSnapshot.data() as DealDataType;
+                fetchedDeals.push({id: documentSnapshot.id, data: fetchedDeal});
             });
 
-            setAcceptedDeals(accepted);
-            setRequestedDeals(requested);
-            setCompletedDeals(completed);
-            setDeclinedDeals(declined);
+            setDeals(fetchedDeals);
         } catch (error) {
             console.error('Error querying user documents:', error);
         }
@@ -70,7 +59,7 @@ const useDeals = () => {
                 status: "accepted",
             }, { merge: true });
 
-            moveDealToAccepted(deal);
+            updateDealStatus(deal.id, "accepted");
         } catch (error) {
             console.error('Error verifying user:', error);
         }
@@ -85,31 +74,33 @@ const useDeals = () => {
                 status: "declined",
             }, { merge: true });
 
-            moveDealToDeclined(deal);
+            updateDealStatus(deal.id, "declined");
         } catch (error) {
             console.error('Error verifying user:', error);
         }
     };
-
-
-    const moveDealToAccepted = (movingDeal: DealType) => {
-        // Remove from requested
-        const updatedList = requestedDeals.filter(deal => deal.id !== movingDeal.id);
-        setRequestedDeals(updatedList);
-
-        // Add to accepted
-        const modifiedMovingDeal = { ...movingDeal, status: 'accepted' };
-        setAcceptedDeals(prevAcceptedDeals => [...prevAcceptedDeals, modifiedMovingDeal]);
-    };
-
-    const moveDealToDeclined = (movingDeal: DealType) => {
-        // Remove from requested
-        const updatedList = requestedDeals.filter(deal => deal.id !== movingDeal.id);
-        setRequestedDeals(updatedList);
-
-        // Add to declined
-        const modifiedMovingDeal = { ...movingDeal, status: 'declined' };
-        setDeclinedDeals(prevDeclinedDeals => [...prevDeclinedDeals, modifiedMovingDeal]);
+    
+    const updateDealStatus = (dealId: string, status: DealStatusType) => {
+        // Find the index of the offer with the given ID
+        const index = deals.findIndex((deal) => deal.id === dealId);
+      
+        if (index !== -1) {
+          // Create a copy of the offer at the found index with updated status and modified date
+          const updatedDeal: DealType = {
+            ...deals[index],
+            data: {
+              ...deals[index].data,
+              status: status,
+            },
+          };
+      
+          // Create a new array with the updated offer
+          const updatedDeals: DealType[] = [...deals];
+          updatedDeals[index] = updatedDeal;
+      
+          // Update state with the new array
+          setDeals(updatedDeals);
+        }
     };
 
     // value == 0 -> new team selected is home team
@@ -120,11 +111,8 @@ const useDeals = () => {
     }
 
     return {
-        acceptedDeals,
-        requestedDeals,
-        completedDeals,
-        declinedDeals,
-        activeValue,
+        shownDeals,
+        options,
         toggleSwitch,
         acceptDeal,
         declineDeal,

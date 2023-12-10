@@ -1,5 +1,5 @@
 export type OfferDataType = {
-    status: "live" | "paused"
+    status: OfferStatusType
     businessId: string
     taken: number
     title: string
@@ -12,3 +12,5 @@ export type OfferType = {
     id: string
     data: OfferDataType
 }
+
+export type OfferStatusType = "live" | "paused";

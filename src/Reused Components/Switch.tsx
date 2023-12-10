@@ -3,19 +3,11 @@ import SwitchSelector from "react-native-switch-selector-fix";
 
 type Props = {
     toggleSwitch: (value: number) => void
-    labels: string[]
+    options: { label: string; value: number }[] 
 }
 
-function Switch({ toggleSwitch, labels}: Props) {
+function Switch({ toggleSwitch, options}: Props) {
 
-    const createOptions = (labels: string[]) => {
-        return labels.map((label, index) => ({
-          label: label,
-          value: index,
-        }));
-    };
-
-    const options = createOptions(labels);
 
     return(
         <SwitchSelector

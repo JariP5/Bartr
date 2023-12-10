@@ -15,7 +15,6 @@ const topTabNavigatorOptions  = () => ({
       shadowColor: 'white',
       elevation: 0,
     },
-    contentContainerStyle: { paddingBottom: 100 },
     tabBarIndicatorStyle: {
       backgroundColor: 'blue',
       height: 4,

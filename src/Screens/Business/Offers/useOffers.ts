@@ -1,15 +1,19 @@
 import firestore from '@react-native-firebase/firestore';
 import { useCallback, useEffect, useState } from "react";
 import { useUserContext } from '../../../Context/User';
-import { OfferDataType, OfferType } from '../../../Types/Offer';
+import { OfferDataType, OfferStatusType, OfferType } from '../../../Types/Offer';
 
 
 const useOffers = () => {
     const { user } = useUserContext();
-    const [liveOffers, setLiveOffers] = useState<OfferType[]>([]);
-    const [pausedOffers, setPausedOffers] = useState<OfferType[]>([]);
+    const [offers, setOffers] = useState<OfferType[]>([]);
     const [activeValue, setActiveValue] = useState<number>(0);
     const [refreshing, setRefreshing] = useState(false);
+    const options: { label: string; value: number }[]  = [
+        {label: "Live", value: 0},
+        {label: "Paused", value: 1}
+    ]
+    const shownOffers = offers.filter(offer => offer.data.status === options[activeValue].label.toLowerCase());
 
     const onRefresh = useCallback(() => {
         setRefreshing(true);
@@ -17,7 +21,7 @@ const useOffers = () => {
         
         setTimeout(() => {
             setRefreshing(false);
-        }, 2000);
+        }, 1000);
     }, []);
   
     useEffect(() => {
@@ -31,21 +35,14 @@ const useOffers = () => {
             .where('businessId', '==', user!.id)
             .get();
 
-            const live: OfferType[] = [];
-            const paused: OfferType[] = [];
+            const fetchedOffers: OfferType[] = [];
 
             querySnapshot.forEach((documentSnapshot) => {
                 const offer = documentSnapshot.data() as OfferDataType;
-
-                if (offer.status === 'live') {
-                    live.push({id: documentSnapshot.id, data: offer});
-                } else if (offer.status === 'paused') {
-                    paused.push({id: documentSnapshot.id, data: offer});
-                }
+                fetchedOffers.push({id: documentSnapshot.id, data: offer});
             });
 
-            setLiveOffers(live);
-            setPausedOffers(paused);
+            setOffers(fetchedOffers);
         } catch (error) {
             console.error('Error querying user documents:', error);
         }
@@ -63,7 +60,7 @@ const useOffers = () => {
                 modified: formattedDate
             }, { merge: true });
 
-            moveOfferFromPausedToLive(offer, formattedDate);
+            updateOfferStatus(offer.id, "live", formattedDate);
         } catch (error) {
             console.error('Error verifying user:', error);
         }
@@ -82,39 +79,37 @@ const useOffers = () => {
                 modified: formattedDate
             }, { merge: true });
 
-            moveOfferFromLiveToPaused(offer, formattedDate);
+            // changeStatus(offer, formattedDate, "paused");
+            updateOfferStatus(offer.id, "paused", formattedDate);
         } catch (error) {
             console.error('Error verifying user:', error);
         }
     };
 
-    const moveOfferFromLiveToPaused = (movingOffer: OfferType, date: string) => {
-        // Remove from live
-        const updatedList = liveOffers.filter(offer => offer.id !== movingOffer.id);
-        setLiveOffers(updatedList);
-
-        // Add to paused
-        const modifiedMovingOffer = { ...movingOffer, status: 'paused', modified: date};
-        const updatedPausedOffers: OfferType[] = [...pausedOffers, modifiedMovingOffer];
-        setPausedOffers(updatedPausedOffers);
-        console.log("Paused");
-        console.log(updatedList);
-        console.log(updatedPausedOffers);
+    const updateOfferStatus = (offerId: string, status: OfferStatusType, date: string) => {
+        // Find the index of the offer with the given ID
+        const index = offers.findIndex((offer) => offer.id === offerId);
+      
+        if (index !== -1) {
+          // Create a copy of the offer at the found index with updated status and modified date
+          const updatedOffer: OfferType = {
+            ...offers[index],
+            data: {
+              ...offers[index].data,
+              status: status,
+              modified: date,
+            },
+          };
+      
+          // Create a new array with the updated offer
+          const updatedOffers: OfferType[] = [...offers];
+          updatedOffers[index] = updatedOffer;
+      
+          // Update state with the new array
+          setOffers(updatedOffers);
+        }
     };
 
-    const moveOfferFromPausedToLive = (movingOffer: OfferType, date: string) => {
-        // Remove from paused
-        const updatedList = pausedOffers.filter(offer => offer.id !== movingOffer.id);
-        setPausedOffers(updatedList);
-
-        // Add to live
-        const modifiedMovingOffer = { ...movingOffer, status: 'live', modified: date };
-        const updatedLiveOffers: OfferType[] = [...liveOffers, modifiedMovingOffer];
-        setLiveOffers(updatedLiveOffers);
-        console.log("Live");
-        console.log(updatedList);
-        console.log(updatedLiveOffers);
-    };
 
     // value == 0 -> new team selected is home team
     function toggleSwitch(value: number) {
@@ -124,9 +119,8 @@ const useOffers = () => {
     }
 
     return {
-        liveOffers,
-        pausedOffers,
-        activeValue,
+        shownOffers,
+        options,
         toggleSwitch,
         startOffer,
         pauseOffer,

@@ -7,17 +7,16 @@ import useOffers from './useOffers';
 
 function Offers() {
     const {
-        liveOffers,
-        pausedOffers,
+        shownOffers,
+        options,
         toggleSwitch,
-        activeValue,
         pauseOffer,
         startOffer,
         refreshing,
         onRefresh
     } = useOffers();
 
-    const offers = activeValue === 0 ? liveOffers : pausedOffers;
+
 
     return(
         <ScrollView 
@@ -35,13 +34,13 @@ function Offers() {
             <VStack space={'md'}>
                 
                 <View px={10} >
-                    <Switch toggleSwitch={toggleSwitch} labels={["Live", "Paused"]} />
+                    <Switch toggleSwitch={toggleSwitch} options={options} />
                 </View>
 
-                {offers.map((offer) => (
-                    <HStack key={offer.data.modified} mx={10} bgColor='$yellow100' p={10} justifyContent='space-between' alignItems='center'>
+                {shownOffers.map((offer) => (
+                    <HStack key={offer.id} mx={10} bgColor='$yellow100' p={10} justifyContent='space-between' alignItems='center'>
                         <Text>{offer.data.title}</Text>
-                        <VStack key={offer.data.modified}>
+                        <VStack>
                             {offer.data.status === "paused" &&
                                 <Button
                                    mt={2} onPress={() => startOffer(offer)}

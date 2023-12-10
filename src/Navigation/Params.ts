@@ -21,4 +21,5 @@ export type InfluencerTopTabParamList = {
 export type BusinessTopTabParamList = {
   "Offers": undefined;
   "Deals": undefined;
+  "Filler": undefined
 };

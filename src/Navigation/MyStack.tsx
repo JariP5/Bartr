@@ -21,21 +21,24 @@ function MyStack({ initialRouteName }: Props) {
       <Stack.Screen 
         name="Login" 
         component={Login}
+        options={{ headerShown: false }}
       />
       <Stack.Screen 
         name="SignUpInfluencer" 
         component={SignUpInfluencer}
+        options={{ headerShown: false }}
         // options={{ presentation: 'modal'}}
       />
       <Stack.Screen 
         name="SignUpBusiness" 
         component={SignUpBusiness}
+        options={{ headerShown: false }}
         // options={{ presentation: 'modal'}}
       />
       <Stack.Screen 
         name="Home" 
         component={Home}
-        options={{ gestureEnabled: false }}
+        options={{ gestureEnabled: false, headerShown: false }}
       />
     </Stack.Navigator>  
   );

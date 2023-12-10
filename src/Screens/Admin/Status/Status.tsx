@@ -7,19 +7,16 @@ import useStatus from './useStatus';
 
 function Status() {
     const {
-        influencers,
-        businesses,
+        shownUsers,
+        options,
         toggleSwitch,
-        activeValue,
         acceptUser,
         declineUser,
         waitUser,
         refreshing,
         onRefresh,
         status
-    } = useStatus();
-
-    const Users = activeValue === 0 ? influencers : businesses;
+    } = useStatus();    
 
     return(
         <ScrollView 
@@ -36,16 +33,16 @@ function Status() {
             <VStack space={'md'}>
                 
                 <View px={10} >
-                    <Switch toggleSwitch={toggleSwitch} labels={["Influencers", "Businesses"]} />
+                    <Switch toggleSwitch={toggleSwitch} options={options} />
                 </View>
 
-                {Users.map((user, index) => (
-                    <HStack key={index} mx={10} bgColor='$yellow100' p={10} justifyContent='space-between' alignItems='center'>
+                {shownUsers.map((user) => (
+                    <HStack key={user.id} mx={10} bgColor='$yellow100' p={10} justifyContent='space-between' alignItems='center'>
                         <Text>{user.data.displayName}</Text>
                         <VStack>
                             {status !== "accepted" &&
                                 <Button
-                                    bgColor={'$green500'} mt={2} onPress={() => acceptUser(user)}
+                                    bgColor={'$green500'} $active-bgColor={'$green700'}  mt={2} onPress={() => acceptUser(user)}
                                 >
                                     <ButtonText>Accept</ButtonText>
                                 </Button>
@@ -61,7 +58,7 @@ function Status() {
 
                             {status !== "declined" &&
                                 <Button
-                                    bgColor={'$red500'} mt={2} onPress={() => declineUser(user)}
+                                    bgColor={'$red500'} $active-bgColor={'$red700'} mt={2} onPress={() => declineUser(user)}
                                 >
                                     <ButtonText>Decline</ButtonText>
                                 </Button>

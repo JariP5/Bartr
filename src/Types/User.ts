@@ -2,8 +2,8 @@ import { BusinessType } from "./Business"
 import { InfluencerType } from "./Influencer"
 
 export type UserDataType = {
-    status: "accepted" | "waiting" | "declined"
-    role: "Admin" | "Influencer" | "Business"
+    status: UserStatusType
+    role: UserRoleType
     email: string
     displayName: string
     instagram: string
@@ -15,3 +15,6 @@ export type UserType = {
     id: string
     data: UserDataType
 }
+
+export type UserStatusType = "accepted" | "waiting" | "declined";
+export type UserRoleType = "Admin" | "Influencer" | "Business";

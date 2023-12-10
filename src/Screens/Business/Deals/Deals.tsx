@@ -2,43 +2,19 @@ import { Button, ButtonText, HStack, ScrollView, Text, VStack, View } from '@glu
 import * as React from 'react';
 import { RefreshControl } from 'react-native';
 import Switch from '../../../Reused Components/Switch';
-import { DealType } from '../../../Types/Deal';
 import useOffers from './useDeals';
   
 
 function Deals() {
     const {
-        acceptedDeals,
-        requestedDeals,
-        completedDeals,
-        declinedDeals,
+        shownDeals,
+        options,
         toggleSwitch,
-        activeValue,
         acceptDeal,
         declineDeal,
         refreshing,
         onRefresh
     } = useOffers();
-
-    let deals: DealType[];
-
-    switch (activeValue) {
-        case 0:
-            deals = acceptedDeals;
-            break;
-        case 1:
-            deals = requestedDeals;
-            break;
-        case 2:
-            deals = completedDeals;
-            break;
-        case 3:
-            deals = declinedDeals;
-            break;
-        default:
-            deals = [];
-            break;
-    }
 
     return(
         <ScrollView 
@@ -56,10 +32,10 @@ function Deals() {
             <VStack space={'md'}>
                 
                 <View px={10} >
-                    <Switch toggleSwitch={toggleSwitch} labels={["Live", "Requests", "Completed", "Declined"]} />
+                    <Switch toggleSwitch={toggleSwitch} options={options} />
                 </View>
 
-                {deals.map((deal, index) => (
+                {shownDeals.map((deal, index) => (
                     <HStack key={index} mx={10} bgColor='$yellow100' p={10} justifyContent='space-between' alignItems='center'>
                         <Text>Deal Title</Text>
                         <VStack>

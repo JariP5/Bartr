@@ -1,18 +1,21 @@
 import * as React from 'react';
 import { useContext } from 'react';
-import { UserContext } from '../../Context/User';
 import Loading from '../../Reused Components/Loading';
-import RenderBasedOnLoginStatus from './LoginStatus';
 
-function RenderContentBasedOnContext(): JSX.Element {
-  const context = useContext(UserContext);
+type RenderContentBasedOnContextProps = {
+  content: React.ComponentType;
+  contextComponent: React.Context<any>;
+}
+
+function RenderContentBasedOnContext({ content, contextComponent }: RenderContentBasedOnContextProps): JSX.Element {
+  const context = useContext(contextComponent);
 
   if (!context) {
     return <Loading />;
   }
 
-//   const Content = content;
-  return <RenderBasedOnLoginStatus />;
+  const Content = content;
+  return <Content />;
 }
 
 export default RenderContentBasedOnContext;

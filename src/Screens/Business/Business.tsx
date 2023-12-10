@@ -6,7 +6,7 @@ import BusinessTopTab from "../../Navigation/TopTab/Business";
 const Business = () => {
     
     return (
-        <View bgColor={'$amber700'}>
+        <View>
             <BusinessTopTab />
         </View>
     );

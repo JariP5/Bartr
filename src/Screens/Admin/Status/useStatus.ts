@@ -1,16 +1,22 @@
 import firestore from '@react-native-firebase/firestore';
 import { useRoute } from '@react-navigation/native';
-import { useCallback, useEffect, useState } from "react";
-import { UserDataType, UserType } from '../../../Types/User';
+import { useCallback, useContext, useState } from "react";
+import { AdminContext } from '../../../Context/Admin';
+import { UserType } from '../../../Types/User';
 
 
 const useStatus = () => {
     const route = useRoute();  
     const status = route.name.toLowerCase();
-    const [influencers, setInfluencers] = useState<UserType[]>([]);
-    const [businesses, setBusinesses] = useState<UserType[]>([]);
+    const { users, fetchUsers, updateUserStatus } = useContext(AdminContext)!;
     const [activeValue, setActiveValue] = useState<number>(0);
     const [refreshing, setRefreshing] = useState(false);
+    const relevantUsers: UserType[] = users.filter(user => user.data.status === status);
+    const options: { label: string; value: number }[]  = [
+        {label: "Influencer", value: 0},
+        {label: "Business", value: 1},
+    ]
+    const shownUsers = relevantUsers.filter(user => user.data.role === options[activeValue].label);
 
     const onRefresh = useCallback(() => {
         setRefreshing(true);
@@ -18,39 +24,8 @@ const useStatus = () => {
         
         setTimeout(() => {
             setRefreshing(false);
-        }, 2000);
+        }, 1000);
     }, []);
-  
-    useEffect(() => {
-        fetchUsers();
-    }, []); 
-
-    const fetchUsers = async () => {
-        try {
-            const querySnapshot = await firestore()
-            .collection('user') 
-            .where('status', '==', status)
-            .get();
-
-            const influencers: UserType[] = [];
-            const businesses: UserType[] = [];
-
-            querySnapshot.forEach((documentSnapshot) => {
-                const user = documentSnapshot.data() as UserDataType;
-
-                if (user.role === 'Influencer') {
-                    influencers.push({id: documentSnapshot.id, data: user});
-                } else if (user.role === 'Business') {
-                    businesses.push({id: documentSnapshot.id, data: user});
-                }
-            });
-
-            setBusinesses(businesses)
-            setInfluencers(influencers);
-        } catch (error) {
-            console.error('Error querying user documents:', error);
-        }
-    };
 
     const acceptUser = async (user: UserType) => {
         try {
@@ -61,7 +36,7 @@ const useStatus = () => {
                 status: "accepted",
             }, { merge: true });
 
-            removeUserFromList(user);
+            updateUserStatus(user.id, "accepted");
         } catch (error) {
             console.error('Error verifying user:', error);
         }
@@ -76,7 +51,7 @@ const useStatus = () => {
                 status: "declined",
             }, { merge: true });
 
-            removeUserFromList(user);
+            updateUserStatus(user.id, "declined");
         } catch (error) {
             console.error('Error verifying user:', error);
         }
@@ -91,22 +66,10 @@ const useStatus = () => {
                 status: "waiting",
             }, { merge: true });
 
-            removeUserFromList(user);
+            updateUserStatus(user.id, "waiting");
         } catch (error) {
             console.error('Error verifying user:', error);
         }
-    };
-
-    const removeUserFromList = (userToRemove: UserType) => {
-        // Filter out the user to be removed
-        if (userToRemove.data.role === "Influencer") {
-            const updatedList = influencers.filter(user => user.id !== userToRemove.id);
-            setInfluencers(updatedList);
-        } else if (userToRemove.data.role === "Business") {
-            const updatedList = businesses.filter(user => user.id !== userToRemove.id);
-            setBusinesses(updatedList);
-        }
-        
     };
 
     // value == 0 -> new team selected is home team
@@ -117,9 +80,8 @@ const useStatus = () => {
     }
 
     return {
-        influencers,
-        businesses,
-        activeValue,
+        shownUsers,
+        options,
         toggleSwitch,
         acceptUser,
         declineUser,
