@@ -1,4 +1,3 @@
-import { Text } from '@gluestack-ui/themed';
 import { createMaterialTopTabNavigator } from '@react-navigation/material-top-tabs';
 import * as React from 'react';
 import Status from '../../Screens/Admin/Status/Status';
@@ -26,12 +25,6 @@ function AdminTopTab() {
       />
     </TopTab.Navigator>
   );
-}
-
-function Empty() {
-  return (
-    <Text> EMpty View</Text>
-  )
 }
 
 export default AdminTopTab;

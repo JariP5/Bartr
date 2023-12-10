@@ -1,7 +1,7 @@
 import { Button, ButtonText, HStack, ScrollView, Text, VStack, View } from '@gluestack-ui/themed';
 import * as React from 'react';
 import { RefreshControl } from 'react-native';
-import Switch from '../Switch';
+import Switch from '../../../Reused Components/Switch';
 import useStatus from './useStatus';
   
 
@@ -9,7 +9,7 @@ function Status() {
     const {
         influencers,
         businesses,
-        toggleUser,
+        toggleSwitch,
         activeValue,
         acceptUser,
         declineUser,
@@ -36,7 +36,7 @@ function Status() {
             <VStack space={'md'}>
                 
                 <View px={10} >
-                    <Switch toggleUser={toggleUser} />
+                    <Switch toggleSwitch={toggleSwitch} labels={["Influencers", "Businesses"]} />
                 </View>
 
                 {Users.map((user, index) => (

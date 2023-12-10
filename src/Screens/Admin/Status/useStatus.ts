@@ -110,7 +110,7 @@ const useStatus = () => {
     };
 
     // value == 0 -> new team selected is home team
-    function toggleUser(value: number) {
+    function toggleSwitch(value: number) {
         if (value != activeValue) {
             setActiveValue(value);
         }
@@ -120,7 +120,7 @@ const useStatus = () => {
         influencers,
         businesses,
         activeValue,
-        toggleUser,
+        toggleSwitch,
         acceptUser,
         declineUser,
         waitUser,

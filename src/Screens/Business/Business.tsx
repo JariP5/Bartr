@@ -1,14 +1,14 @@
-import { Text } from '@gluestack-ui/themed';
+import { View } from "@gluestack-ui/themed";
 import React from "react";
-import useBusiness from './useBusiness';
+import BusinessTopTab from "../../Navigation/TopTab/Business";
 
 
 const Business = () => {
-    const {
-        user
-    } = useBusiness();
+    
     return (
-        <Text>{user?.data.email}</Text>
+        <View bgColor={'$amber700'}>
+            <BusinessTopTab />
+        </View>
     );
 };
 

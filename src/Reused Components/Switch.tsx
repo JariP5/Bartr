@@ -2,21 +2,26 @@ import React from "react";
 import SwitchSelector from "react-native-switch-selector-fix";
 
 type Props = {
-    toggleUser: (value: number) => void
+    toggleSwitch: (value: number) => void
+    labels: string[]
 }
 
-function Switch({ toggleUser }: Props) {
-    
-    const options = [
-        { label: "Influencers", value: 0 },
-        { label: "Businesses", value: 1 } 
-    ]
+function Switch({ toggleSwitch, labels}: Props) {
+
+    const createOptions = (labels: string[]) => {
+        return labels.map((label, index) => ({
+          label: label,
+          value: index,
+        }));
+    };
+
+    const options = createOptions(labels);
 
     return(
         <SwitchSelector
             options={options}
             initial={0}
-            onPress={(value) => toggleUser(value as number)}
+            onPress={(value) => toggleSwitch(value as number)}
             textColor={'black'}
             selectedColor={'yellow'}
             buttonColor={'red'}

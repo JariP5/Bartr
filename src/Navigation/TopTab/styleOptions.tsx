@@ -24,8 +24,7 @@ const topTabNavigatorOptions  = () => ({
       width: 100,
       borderRadius: 2,
       elevation: 0,
-    },
-    
+    } 
 });
   
 export default topTabNavigatorOptions;
