@@ -1,11 +1,9 @@
 export type OfferDataType = {
     status: OfferStatusType
     businessId: string
-    taken: number
     title: string
     task: string
     reward: string
-    modified: string
 }
 
 export type OfferType = {

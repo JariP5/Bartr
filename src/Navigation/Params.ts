@@ -3,6 +3,7 @@ export type StackParamList = {
   SignUpInfluencer: undefined
   SignUpBusiness: undefined
   Home: undefined
+  NewOffer: { onRefresh: () => void }
 };
 
 export type AdminTopTabParamList = {

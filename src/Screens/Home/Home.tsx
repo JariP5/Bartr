@@ -12,7 +12,7 @@ const Home = () => {
     }
     
     return (
-        <View flex={1} bgColor="red">
+        <View flex={1}>
             <Header/>
             <RenderBasedOnUser/>
         </View>

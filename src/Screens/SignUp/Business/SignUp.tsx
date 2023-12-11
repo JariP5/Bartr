@@ -1,4 +1,4 @@
-import { Button, ButtonText, Center, Input, InputField, Text, VStack } from '@gluestack-ui/themed';
+import { Button, ButtonText, Input, InputField, Text, VStack, View } from '@gluestack-ui/themed';
 import React from "react";
 import SignUpHeader from '../Header';
 import SignUpModal from '../Modal';
@@ -18,11 +18,11 @@ const SignUpBusiness = () => {
 
 
     return (
-        <Center w={"100%"} >
+        <View flex={1}>
         
             <SignUpHeader role={"Business"} />
     
-            <VStack w={'100%'} mt={100} space={'md'} px={50}>
+            <VStack mt={100} space={'md'} px={50}>
                 <Input >
                     <InputField placeholder={"Company Name"} onChangeText={value => setCompanyName(value)}/>
                 </Input>
@@ -54,7 +54,7 @@ const SignUpBusiness = () => {
                 <SignUpModal showModal={showModal}/>
 
             </VStack>
-        </Center>
+        </View>
       );
 };
 

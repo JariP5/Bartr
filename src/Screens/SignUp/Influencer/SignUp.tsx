@@ -1,4 +1,4 @@
-import { Button, ButtonText, Center, Input, InputField, Text, VStack } from '@gluestack-ui/themed';
+import { Button, ButtonText, Input, InputField, Text, VStack, View } from '@gluestack-ui/themed';
 import React from "react";
 import SignUpHeader from '../Header';
 import SignUpModal from '../Modal';
@@ -19,11 +19,11 @@ const SignUpInfluencer = () => {
     } = useSignUpInfluencer();
 
     return (
-        <Center w={"100%"}>
+        <View flex={1}>
 
             <SignUpHeader role={"Influencer"} />
     
-            <VStack w={'100%'} mt={100} space={'md'} px={50}>
+            <VStack mt={100} space={'md'} px={50}>
 
                 <Input>
                     <InputField placeholder={"First Name"} onChangeText={value => setFirstName(value)}/>
@@ -64,7 +64,7 @@ const SignUpInfluencer = () => {
                 <SignUpModal showModal={showModal}/>
 
             </VStack>
-        </Center>
+        </View>
       );
 };
 

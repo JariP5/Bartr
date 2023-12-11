@@ -49,18 +49,15 @@ const useBusinessOffers = () => {
     };
 
     const startOffer = async (offer: OfferType) => {
-        const currentDate = new Date();
-        const formattedDate = currentDate.toLocaleString('en-US', { timeZone: 'UTC' });
         try {
             firestore()
             .collection('offer')
             .doc(offer.id)
             .set({
-                status: "live",
-                modified: formattedDate
+                status: "live"
             }, { merge: true });
 
-            updateOfferStatus(offer.id, "live", formattedDate);
+            updateOfferStatus(offer.id, "live");
         } catch (error) {
             console.error('Error verifying user:', error);
         }
@@ -68,25 +65,21 @@ const useBusinessOffers = () => {
 
 
     const pauseOffer = async (offer: OfferType) => {
-        const currentDate = new Date();
-        const formattedDate = currentDate.toLocaleString('en-US', { timeZone: 'UTC' });
         try {
             firestore()
             .collection('offer')
             .doc(offer.id)
             .set({
-                status: "paused",
-                modified: formattedDate
+                status: "paused"
             }, { merge: true });
 
-            // changeStatus(offer, formattedDate, "paused");
-            updateOfferStatus(offer.id, "paused", formattedDate);
+            updateOfferStatus(offer.id, "paused");
         } catch (error) {
             console.error('Error verifying user:', error);
         }
     };
 
-    const updateOfferStatus = (offerId: string, status: OfferStatusType, date: string) => {
+    const updateOfferStatus = (offerId: string, status: OfferStatusType) => {
         // Find the index of the offer with the given ID
         const index = offers.findIndex((offer) => offer.id === offerId);
       
@@ -96,8 +89,7 @@ const useBusinessOffers = () => {
             ...offers[index],
             data: {
               ...offers[index].data,
-              status: status,
-              modified: date,
+              status: status
             },
           };
       

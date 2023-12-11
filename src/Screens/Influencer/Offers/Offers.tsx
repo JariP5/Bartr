@@ -27,7 +27,7 @@ function InfluencerOffers() {
             }>
             <VStack space={'md'}>
                 {offers.map((offer) => (
-                    <HStack key={offer.id} mx={10} bgColor='$yellow100' p={10} justifyContent='space-between' alignItems='center'>
+                    <HStack key={offer.id} mx={10} bgColor={'$warmGray300'} borderRadius={5} p={10} justifyContent='space-between' alignItems='center'>
                         <Text>{offer.data.title}</Text>
                         <VStack>
                             <Button

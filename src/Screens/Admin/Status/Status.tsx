@@ -19,8 +19,7 @@ function Status() {
     } = useStatus();    
 
     return(
-        <ScrollView 
-            flex={1} 
+        <ScrollView  
             bg={'white'} 
             showsVerticalScrollIndicator={false} 
             pt={10} 
@@ -37,7 +36,7 @@ function Status() {
                 </View>
 
                 {shownUsers.map((user) => (
-                    <HStack key={user.id} mx={10} bgColor='$yellow100' p={10} justifyContent='space-between' alignItems='center'>
+                    <HStack key={user.id} mx={10} bgColor={'$warmGray300'} borderRadius={5} p={10} justifyContent={'space-between'} alignItems={'center'}>
                         <Text>{user.data.displayName}</Text>
                         <VStack>
                             {status !== "accepted" &&

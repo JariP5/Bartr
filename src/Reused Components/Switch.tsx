@@ -15,10 +15,10 @@ function Switch({ toggleSwitch, options}: Props) {
             initial={0}
             onPress={(value) => toggleSwitch(value as number)}
             textColor={'black'}
-            selectedColor={'yellow'}
-            buttonColor={'red'}
-            backgroundColor={'green'}
-            borderColor={'blue'}
+            selectedColor={'white'}
+            buttonColor={'blue'}
+            backgroundColor={'lightblue'}
+            borderColor={'white'}
             hasPadding
             buttonMargin={2}
         />

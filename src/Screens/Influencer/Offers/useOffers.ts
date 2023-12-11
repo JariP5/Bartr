@@ -43,8 +43,6 @@ const useInfluencerOffers = () => {
     };
 
     const requestDeal = async (offer: OfferType) => {
-        // create new deal
-        
         try {
             firestore()
             .collection('deal')

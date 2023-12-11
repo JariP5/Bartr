@@ -18,7 +18,7 @@ function BusinessDeals() {
 
     return(
         <ScrollView 
-            bg={'green'} 
+            bg={'white'} 
             showsVerticalScrollIndicator={false} 
             pt={10} 
             refreshControl={
@@ -34,7 +34,7 @@ function BusinessDeals() {
                 </View>
 
                 {shownDeals.map((deal) => (
-                    <HStack key={deal.id} mx={10} bgColor='$yellow100' p={10} justifyContent='space-between' alignItems='center'>
+                    <HStack key={deal.id} mx={10} bgColor={'$warmGray300'} borderRadius={5} p={10} justifyContent='space-between' alignItems='center'>
                         <Text>{deal.data.title}</Text>
                         <VStack>
                             {deal.data.status === "requested" &&

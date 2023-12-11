@@ -23,7 +23,7 @@ function Admin() {
   
 export function AdminContent() {
     return (
-        <View>
+        <View flex={1}>
             <AdminTopTab />
         </View>
     );  

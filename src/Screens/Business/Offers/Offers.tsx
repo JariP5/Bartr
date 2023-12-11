@@ -1,6 +1,9 @@
 import { AddIcon, Button, ButtonText, Fab, FabIcon, FabLabel, HStack, ScrollView, Text, VStack, View } from '@gluestack-ui/themed';
+import { useNavigation } from '@react-navigation/native';
+import { StackNavigationProp } from '@react-navigation/stack';
 import * as React from 'react';
 import { RefreshControl } from 'react-native';
+import { StackParamList } from '../../../Navigation/Params';
 import Switch from '../../../Reused Components/Switch';
 import useOffers from './useOffers';
   
@@ -15,11 +18,10 @@ function BusinessOffers() {
         refreshing,
         onRefresh
     } = useOffers();
-
-
+    const navigation = useNavigation<StackNavigationProp<StackParamList>>();
 
     return(
-        <View flex={1} bgColor='yellow'>
+        <View flex={1} bgColor={'white'}>
             <ScrollView 
                 showsVerticalScrollIndicator={false} 
                 pt={10} 
@@ -36,7 +38,7 @@ function BusinessOffers() {
                     </View>
 
                     {shownOffers.map((offer) => (
-                        <HStack key={offer.id} mx={10} bgColor='$yellow100' p={10} justifyContent='space-between' alignItems='center'>
+                        <HStack key={offer.id} mx={10} bgColor={'$warmGray300'} borderRadius={5} p={10} justifyContent='space-between' alignItems='center'>
                             <Text>{offer.data.title}</Text>
                             <VStack>
                                 {offer.data.status === "paused" &&
@@ -64,9 +66,7 @@ function BusinessOffers() {
             <Fab
                 size="md"
                 placement="bottom right"
-                isHovered={false}
-                isDisabled={false}
-                isPressed={false}
+                onPress={() => navigation.push('NewOffer', { onRefresh })}
             >
                 <FabIcon as={AddIcon} mr="$1" />
                 <FabLabel>New Offer</FabLabel>
